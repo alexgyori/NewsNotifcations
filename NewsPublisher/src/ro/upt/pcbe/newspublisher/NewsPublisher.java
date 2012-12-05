@@ -34,6 +34,7 @@ public class NewsPublisher extends Publisher{
 			
 			try {
 				Thread.sleep(r.nextInt(10000));
+				System.out.println("having a break");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

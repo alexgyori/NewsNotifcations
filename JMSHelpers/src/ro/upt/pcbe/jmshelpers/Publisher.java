@@ -47,7 +47,7 @@ abstract public class Publisher extends Thread{
 		Topic chatTopic = (Topic) jndi.lookup(topicName);
 
 		// Create a JMS publisher and subscriber
-		TopicPublisher publisher = this.topicSession.createPublisher(chatTopic);
+		topicPublisher = this.topicSession.createPublisher(chatTopic);
 	}
 	
 	public void publish(Map<String,String> hm) throws JMSException
