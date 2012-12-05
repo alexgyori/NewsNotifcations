@@ -1,3 +1,0 @@
-INDEX VERSION 1.126+C:\Users\alexandru.gyori\workspace\java\school\PCBE\Project2\.metadata\.plugins\org.eclipse.jdt.core
-3011832139.index
-430481364.index
