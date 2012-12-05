@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.jms.JMSException;
-import javax.jms.TopicPublisher;
 import javax.naming.NamingException;
 
 import ro.upt.pcbe.jmshelpers.Publisher;
