@@ -12,7 +12,7 @@ public class Program  {
 		
 		NewsPublisher publisher = new NewsPublisher("NewsNotifications", "guest", "guest");
 		publisher.start();
-		publisher.join();
+		//publisher.join();		
 	}
 }
 

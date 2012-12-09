@@ -22,7 +22,7 @@ public class NewsPublisher extends Publisher{
 	public void run()
 	{
 		Random r = new Random();
-		while(true)
+		for(int i = 0; i<10;i++)
 		{
 			try {
 				this.publish(this.makeHm());
@@ -32,7 +32,7 @@ public class NewsPublisher extends Publisher{
 			}
 			
 			try {
-				Thread.sleep(r.nextInt(10000));
+				Thread.sleep(r.nextInt(1000));
 				System.out.println("having a break");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
