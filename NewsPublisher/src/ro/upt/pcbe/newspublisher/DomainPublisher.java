@@ -1,9 +1,11 @@
 package ro.upt.pcbe.newspublisher;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.jms.JMSException;
 import javax.naming.NamingException;
@@ -12,11 +14,35 @@ import ro.upt.pcbe.jmshelpers.Publisher;
 
 public class DomainPublisher extends Publisher{
 
-	public DomainPublisher(String topicName, String username, String password)
-			throws NamingException, JMSException {
-		super(topicName, username, password);		
+	public static DomainPublisher getInstance() throws NamingException, JMSException
+	{
+		if(instance == null)
+		{
+			synchronized(DomainPublisher.class)
+			{
+				if(instance==null)
+					instance = new DomainPublisher("DomainsNotifications","guest", "guest");
+			}
+		}
+		return instance;
 	}
-	private Map<String, List<String>> domainsToSubdomains;
+	
+	private static volatile DomainPublisher instance;
+	
+	private DomainPublisher(String topicName, String username, String password)
+			throws NamingException, JMSException {
+		super(topicName, username, password);
+		this.domainsToSubdomains=new ConcurrentHashMap<String,Set<String>>();
+		this.putSubdomainToHashMap("Sport", "Fotbal");
+		this.putSubdomainToHashMap("Sport", "Basket");
+		this.putSubdomainToHashMap("Sport", "Judo");
+		this.putSubdomainToHashMap("Sport", "Diverse");
+		this.putSubdomainToHashMap("Politica", "Inutile");
+		this.putSubdomainToHashMap("Tehnologie", "Cutting-edge");
+		this.putSubdomainToHashMap("Tehnologie", "Amuzante");
+		
+	}
+	private ConcurrentHashMap<String, Set<String>> domainsToSubdomains;
 	
 	public void publishAllDomainsTo(String id) throws JMSException
 	{
@@ -40,15 +66,23 @@ public class DomainPublisher extends Publisher{
 	
 	public void addDomain(String domain, String subdomain) throws JMSException
 	{
-		if(this.domainsToSubdomains.containsKey(domain))
-		{
-			this.domainsToSubdomains.get(domain).add(subdomain);
-		}
-		else
-		{
-			this.domainsToSubdomains.put(domain, Arrays.asList(subdomain));
-		}
+		putSubdomainToHashMap(domain, subdomain);
 		this.publish(this.makeDomainMessage(domain, subdomain));
+	}
+	//TODO: Review this to make sure it works;
+	//this method is called from multiple threads so it needs to be threadsafe
+	private void putSubdomainToHashMap(String domain, String subdomain) {		
+		Set<String> set = new HashSet<String>();
+		set.add(subdomain);	
+		set = Collections.synchronizedSet(set);
+		//the map is concurrent, so it will return non-null if the key already exists in the map
+		//the set is also concurrent so adding an item to it should be safe
+		if(this.domainsToSubdomains.putIfAbsent(domain, set)!=null)
+		{
+			
+				this.domainsToSubdomains.get(domain).add(subdomain);			
+		}
+		
 	}
 
 	private Map<String, String> makeDomainMessage(String domain,
