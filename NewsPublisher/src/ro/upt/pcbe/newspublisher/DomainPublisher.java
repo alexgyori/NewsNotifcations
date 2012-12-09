@@ -74,13 +74,21 @@ public class DomainPublisher extends Publisher{
 	private void putSubdomainToHashMap(String domain, String subdomain) {		
 		Set<String> set = new HashSet<String>();
 		set.add(subdomain);	
+		
+		//It seems that this synchronized set would work best
+		//other options are SkipListSet - that has O(log(n)) insertion because it keeps the set sorted
+		//or CopyOnWriteArraySet which copies when you write - and because we have a write intensive pattern of ussage
+		//I believe synchronizedSet is better.
+		//TODO:Review
 		set = Collections.synchronizedSet(set);
+		
 		//the map is concurrent, so it will return non-null if the key already exists in the map
 		//the set is also concurrent so adding an item to it should be safe
 		if(this.domainsToSubdomains.putIfAbsent(domain, set)!=null)
 		{
-			
-				this.domainsToSubdomains.get(domain).add(subdomain);			
+			//this works because mappings are never removed(in the sense of replacing an already added set
+			//subdomains are just added to the subdomains set, never replaced.
+			this.domainsToSubdomains.get(domain).add(subdomain);	
 		}
 		
 	}
