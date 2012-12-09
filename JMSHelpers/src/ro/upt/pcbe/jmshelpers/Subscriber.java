@@ -52,13 +52,10 @@ public class Subscriber implements javax.jms.MessageListener {
 
 	/* Receive message from topic subscriber */
 	public void onMessage(Message message) {
-		try {
-			TextMessage textMessage = (TextMessage) message;
-			String text = textMessage.getText();
-			System.out.println(text);
-		} catch (JMSException jmse) {
-			jmse.printStackTrace();
-		}
+		Message msg = message;
+		String text = msg.toString();
+		
+		System.out.println(text);
 	}
 
 	
