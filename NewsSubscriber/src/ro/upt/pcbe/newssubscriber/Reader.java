@@ -6,7 +6,7 @@ import ro.upt.pcbe.jmshelpers.Subscriber;
 
 
 
-public class Program {
+public class Reader {
 
 	/**
 	 * @param args
@@ -14,10 +14,14 @@ public class Program {
 	 */
 	public static void main(String[] args) throws JMSException {
 		// TODO Auto-generated method stub
-		Subscriber sub=null;
+		NewsSubscriber sub=null;
 		try {
-			sub = new Subscriber("NewsNotifications", "guest", "guest");
+			sub = new NewsSubscriber("NewsNotifications", "guest", "guest");
 			
+			sub.addDomain(new DoSub("Sport","Gigi"));
+			Thread.sleep(10000);
+			System.out.println("Filtering to receive only Gigi news");
+			sub.updateFilter();
 			while(true)
 			{
 				
