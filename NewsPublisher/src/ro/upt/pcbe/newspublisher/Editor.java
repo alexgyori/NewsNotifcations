@@ -5,7 +5,7 @@ import javax.naming.*;
 import java.io.*;
 import java.util.Properties;
 
-public class Program  {
+public class Editor  {
 		
 	/* Run the Chat client */
 	public static void main(String[] args) throws NamingException, JMSException, InterruptedException {
