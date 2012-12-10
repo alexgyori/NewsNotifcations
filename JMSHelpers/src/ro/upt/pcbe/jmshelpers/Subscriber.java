@@ -5,9 +5,11 @@ import javax.naming.*;
 import java.io.*;
 import java.util.Properties;
 
-public class Subscriber implements javax.jms.MessageListener {
+public abstract class Subscriber implements javax.jms.MessageListener {
 	private TopicSession subSession;
 	private TopicConnection connection;
+	private Topic topic;
+	private TopicSubscriber subscriber;
 
 	/* Constructor. Establish JMS publisher and subscriber */
 	public Subscriber(String topicName, String username, String password)
@@ -31,38 +33,63 @@ public class Subscriber implements javax.jms.MessageListener {
 		// Look up a JMS topic
 		Topic topic = (Topic) jndi.lookup(topicName);
 
-		// Create a JMS subscriber
-		TopicSubscriber subscriber = subSession.createSubscriber(topic);
+		refreshSubscriber(subSession,topic);
 
-		// Set a JMS message listener
-		subscriber.setMessageListener(this);
+		set(subSession, connection, topic);
 
-		set(subSession, connection);
-		
 		// Start the JMS connection; allows messages to be delivered
 		connection.start();
 
 	}
 
-	private void set(TopicSession subSession, TopicConnection connection) {
+
+	private void refreshSubscriber(TopicSession session, Topic topic)
+	{
+		// Create a JMS subscriber
+		
+		try {
+			if(this.subscriber!=null)
+			{
+				this.subscriber.close();
+			}
+			this.subscriber = session.createSubscriber(topic, getSelectorString(),true);
+			// Set a JMS message listener
+			this.subscriber.setMessageListener(this);
+		} catch (JMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void set(TopicSession subSession, TopicConnection connection, Topic topic) {
 		// TODO Auto-generated method stub
 		this.connection = connection;
 		this.subSession = subSession;
+		this.topic = topic;
 	}
 
 	/* Receive message from topic subscriber */
-	public void onMessage(Message message) {
-		Message msg = message;
-		String text = msg.toString();
-		
+	public synchronized void onMessage(Message message) {
+
+		String text = message.toString();
+
 		System.out.println(text);
 	}
 
+	//call this to apply the possible change in the desired filtering
+	public void updateFilter()
+	{
+		refreshSubscriber(this.subSession, this.topic);
+	}
 	
+	abstract protected String getSelectorString();
+
 	/* Close the JMS connection */
 	public void close() throws JMSException {
 		connection.close();
 	}
 }
+
+
 
 
