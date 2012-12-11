@@ -9,4 +9,6 @@ Link to video tutorial
 http://www.youtube.com/watch?v=H7ecAAVUUZg --> see how to create Topics
 
 Currently the following Topics need to exist to run the app:
-	-NewsNotifications	
+	-NewsNotifications
+	-DomainsNotifications
+	-ReadNotifications
