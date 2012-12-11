@@ -12,6 +12,7 @@ public class Reader {
 	 * @param args
 	 * @throws JMSException 
 	 */
+	//added to commit
 	public static void main(String[] args) throws JMSException {
 		// TODO Auto-generated method stub
 		NewsSubscriber sub=null;
