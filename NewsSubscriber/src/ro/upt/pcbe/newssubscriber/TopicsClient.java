@@ -11,6 +11,7 @@ import javax.jms.Message;
 import javax.jms.ObjectMessage;
 import javax.naming.NamingException;
 
+import ro.upt.pcbe.jmshelpers.DoSub;
 import ro.upt.pcbe.jmshelpers.Publisher;
 import ro.upt.pcbe.jmshelpers.Subscriber;
 

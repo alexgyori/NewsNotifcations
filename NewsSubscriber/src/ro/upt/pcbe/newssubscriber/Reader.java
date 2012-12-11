@@ -1,6 +1,7 @@
 package ro.upt.pcbe.newssubscriber;
 import javax.jms.JMSException;
 
+import ro.upt.pcbe.jmshelpers.DoSub;
 import ro.upt.pcbe.jmshelpers.Subscriber;
 
 

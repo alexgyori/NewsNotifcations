@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.jms.JMSException;
 import javax.jms.Message;
 
+import ro.upt.pcbe.jmshelpers.DoSub;
 import ro.upt.pcbe.jmshelpers.Subscriber;
 
 
