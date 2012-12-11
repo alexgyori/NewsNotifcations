@@ -8,12 +8,16 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.ObjectMessage;
 import javax.naming.NamingException;
 
+import ro.upt.pcbe.jmshelpers.DoSub;
 import ro.upt.pcbe.jmshelpers.Publisher;
 
 public class DomainPublisher extends Publisher{
 
+	
 	public static DomainPublisher getInstance() throws NamingException, JMSException
 	{
 		if(instance == null)
@@ -46,15 +50,25 @@ public class DomainPublisher extends Publisher{
 	
 	public void publishAllDomainsTo(String id) throws JMSException
 	{
+		HashSet<DoSub> domains = new HashSet<DoSub>();
 		for(String domain : this.domainsToSubdomains.keySet())
 		{
 			for(String sub : this.domainsToSubdomains.get(domain))
 			{
-				this.publish(this.makeIdentifiedDomainResponse(id, domain, sub));
+				domains.add(new DoSub(domain, sub));
 			}
 		}
+		this.publish(domains,id);
 	}
 	
+	private void publish(HashSet<DoSub> domains, String guid) throws JMSException {
+		
+		ObjectMessage msg = this.topicSession.createObjectMessage(domains);
+		msg.setStringProperty("ID", guid);		
+		this.topicPublisher.publish(msg);
+		
+	}
+
 	public Map<String,String> makeIdentifiedDomainResponse(String id, String domain, String subdomain)
 	{
 		Map<String,String> hm = makeDomainMessage(domain, subdomain);

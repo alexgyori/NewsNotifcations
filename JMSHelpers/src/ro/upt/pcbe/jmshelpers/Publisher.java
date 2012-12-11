@@ -16,8 +16,8 @@ import javax.naming.NamingException;
 import javax.jms.Message;
 
 abstract public class Publisher extends Thread{
-	private TopicSession topicSession;
-	private TopicPublisher topicPublisher;
+	protected TopicSession topicSession;
+	protected TopicPublisher topicPublisher;
 	private TopicConnection topicConection;
 	
 	public Publisher(String topicName, String username, String password) throws NamingException, JMSException
@@ -49,7 +49,6 @@ abstract public class Publisher extends Thread{
 		// Create a JMS publisher and subscriber
 		topicPublisher = this.topicSession.createPublisher(chatTopic);
 	}
-	
 	public void publish(Map<String,String> hm) throws JMSException
 	{
 		Message msg = this.topicSession.createMessage();

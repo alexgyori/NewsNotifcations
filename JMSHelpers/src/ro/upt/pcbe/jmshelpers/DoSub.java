@@ -1,4 +1,4 @@
-package ro.upt.pcbe.newssubscriber;
+package ro.upt.pcbe.jmshelpers;
 
 public class DoSub {
 
