@@ -17,7 +17,8 @@ public class Reader {
 		// TODO Auto-generated method stub
 		NewsSubscriber sub=null;
 		try {
-			sub = new NewsSubscriber("NewsNotifications", "guest", "guest");
+			ReadNotificationsPublisher publ = new ReadNotificationsPublisher("ReadNotifications", "guest", "guest");
+			sub = new NewsSubscriber("NewsNotifications", "guest", "guest",publ);
 			
 			sub.addDomain(new DoSub("Sport","Gigi"));
 			Thread.sleep(10000);

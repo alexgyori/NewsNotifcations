@@ -11,10 +11,12 @@ import ro.upt.pcbe.jmshelpers.Subscriber;
 public class NewsSubscriber extends Subscriber {
 
 	private Set<DoSub> interestedDomains;
+	private ReadNotificationsPublisher readPublisher;
 
-	public NewsSubscriber(String topicName, String username, String password)
+	public NewsSubscriber(String topicName, String username, String password, ReadNotificationsPublisher publ)
 			throws Exception {
 		super(topicName, username, password);
+		this.readPublisher = publ;
 		interestedDomains = new HashSet<DoSub>();
 		// TODO Auto-generated constructor stub
 	}
@@ -43,6 +45,10 @@ public class NewsSubscriber extends Subscriber {
 
 		try {
 			System.out.println(message.getStringProperty("link")+":"+message.getStringProperty("creationDate"));
+			if(message.getStringProperty("newsType").equals("new"))
+			{
+				readPublisher.sendReadMessage(message.getStringProperty("newsId"));
+			}
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
