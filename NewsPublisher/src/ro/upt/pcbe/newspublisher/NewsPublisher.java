@@ -54,6 +54,8 @@ public class NewsPublisher extends Publisher{
 			hm.put("domain", "Sport");
 			hm.put("subdomain", "Tenis");
 			hm.put("creationDate", date);
+			hm.put("newsId", "1");
+			hm.put("newsType", "new");
 			hm.put("lastModificationDate", new Date().toString());
 			hm.put("link", "http://tenisnews.ro");
 			System.out.println("Sending Sport/Tenis news:"+date);
@@ -64,6 +66,8 @@ public class NewsPublisher extends Publisher{
 			hm.put("domain", "Sport");
 			hm.put("subdomain", "Gigi");
 			hm.put("creationDate", date);
+			hm.put("newsId", "2");
+			hm.put("newsType", "new");
 			hm.put("lastModificationDate", new Date().toString());
 			hm.put("link", "http://giginews.ro");
 			System.out.println("Sending Sport/Gigi news:"+date);

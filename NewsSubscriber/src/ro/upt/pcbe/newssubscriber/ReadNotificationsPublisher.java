@@ -1,5 +1,8 @@
 package ro.upt.pcbe.newssubscriber;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.jms.JMSException;
 import javax.naming.NamingException;
 
@@ -13,4 +16,15 @@ public class ReadNotificationsPublisher extends Publisher {
 		// TODO Auto-generated constructor stub
 	}
 
+	public synchronized void sendReadMessage(String newsId)
+	{
+		Map<String,String> hm = new HashMap<String,String>();
+		hm.put("newsId", newsId);
+		try {
+			this.publish(hm);
+		} catch (JMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
