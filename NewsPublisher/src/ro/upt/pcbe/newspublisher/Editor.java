@@ -11,7 +11,17 @@ public class Editor  {
 	public static void main(String[] args) throws NamingException, JMSException, InterruptedException {
 		
 		NewsPublisher publisher = new NewsPublisher("NewsNotifications", "guest", "guest");
+		try {
+			ReadNotificationsSubscriber sub = new ReadNotificationsSubscriber("ReadNotifications", "guest", "guest");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		publisher.start();
+		while(true)
+		{
+			
+		}
 		//publisher.join();		
 	}
 }

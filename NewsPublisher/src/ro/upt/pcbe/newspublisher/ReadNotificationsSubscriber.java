@@ -30,6 +30,7 @@ public class ReadNotificationsSubscriber  extends Subscriber{
 			Integer count = 0;
 			synchronized(this)
 			{
+				System.out.println("user read news with id="+newsId);
 				if(this.newsToNumberOfReads.containsKey(newsId))
 				{
 					count = this.newsToNumberOfReads.get(newsId);					
