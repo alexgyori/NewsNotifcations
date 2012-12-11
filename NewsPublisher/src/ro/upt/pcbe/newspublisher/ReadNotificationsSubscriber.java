@@ -1,6 +1,5 @@
 package ro.upt.pcbe.newspublisher;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
