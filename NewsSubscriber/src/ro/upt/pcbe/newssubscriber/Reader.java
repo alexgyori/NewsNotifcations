@@ -20,7 +20,8 @@ public class Reader {
 		try {
 			ReadNotificationsPublisher publ = new ReadNotificationsPublisher("ReadNotifications", "guest", "guest");
 			sub = new NewsSubscriber("NewsNotifications", "guest", "guest",publ);
-			
+			TopicsClient topicClient = new TopicsClient();
+			topicClient.start();
 			sub.addDomain(new DoSub("Sport","Gigi"));
 			Thread.sleep(10000);
 			System.out.println("Filtering to receive only Gigi news");

@@ -74,7 +74,7 @@ class TopicRequestPublisher extends Publisher{
 	public void sendRequest(String ID){
 		HashMap<String, String> hm = new HashMap<String, String>();
 		hm.put("ID", ID);
-		
+		hm.put("isRequest", "true");
 		try {
 			this.publish(hm);
 		} catch (JMSException e) {
@@ -113,6 +113,7 @@ class TopicReceiveSubscriber extends Subscriber{
 		if (message instanceof ObjectMessage){
 			try {
 				hs = (HashSet) ((ObjectMessage)message).getObject();
+				System.out.println(hs);
 			} catch (JMSException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
