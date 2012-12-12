@@ -16,8 +16,10 @@ public class DomainSubscriber extends Subscriber {
 	@Override
 	public void onMessage(Message msg)
 	{
+		
 		try {
 			DomainPublisher.getInstance().publishAllDomainsTo(msg.getStringProperty("ID"));
+			System.out.println("Received domain req. from "+msg.getStringProperty("ID"));
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
