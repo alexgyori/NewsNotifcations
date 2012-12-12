@@ -48,7 +48,7 @@ public class TopicsClient extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		sub.setSelectorString("ID='"+String.valueOf(myID)+"'");
+		sub.setSelectorString("ID='"+String.valueOf(myID)+"'"+" AND isRequest = 'false' ");
 		
 		//Send request
 		pub.sendRequest(String.valueOf(myID));

@@ -64,7 +64,8 @@ public class DomainPublisher extends Publisher{
 	private void publish(HashSet<DoSub> domains, String guid) throws JMSException {
 		
 		ObjectMessage msg = this.topicSession.createObjectMessage(domains);
-		msg.setStringProperty("ID", guid);		
+		msg.setStringProperty("ID", guid);
+		msg.setStringProperty("isRequest", "false");
 		this.topicPublisher.publish(msg);
 		
 	}

@@ -30,7 +30,7 @@ public class DomainSubscriber extends Subscriber {
 	@Override
 	protected String getSelectorString() {
 
-		return "ID IS NOT NULL";
+		return "ID IS NOT NULL AND isRequest='true'";
 	}
 
 }
