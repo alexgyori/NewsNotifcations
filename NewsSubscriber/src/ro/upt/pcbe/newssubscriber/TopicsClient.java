@@ -29,7 +29,7 @@ public class TopicsClient extends Thread {
 		TopicRequestPublisher pub = null;
 		
 		try {
-			pub = new TopicRequestPublisher("TopicNotifications", "guest", "guest");
+			pub = new TopicRequestPublisher("DomainsNotifications", "guest", "guest");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,7 +43,7 @@ public class TopicsClient extends Thread {
 		TopicReceiveSubscriber sub = null;
 		
 		try {
-			sub = new TopicReceiveSubscriber("TopicNotifications", "guest", "guest");
+			sub = new TopicReceiveSubscriber("DomainsNotifications", "guest", "guest");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +52,7 @@ public class TopicsClient extends Thread {
 		
 		//Send request
 		pub.sendRequest(String.valueOf(myID));
-		
+		System.out.println("Sent topic request....");
 		//Get Topics
 		topicsSet = sub.getTopics();
 	}
