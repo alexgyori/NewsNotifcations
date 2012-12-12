@@ -13,6 +13,7 @@ public class Editor  {
 		NewsPublisher publisher = new NewsPublisher("NewsNotifications", "guest", "guest");
 		try {
 			ReadNotificationsSubscriber sub = new ReadNotificationsSubscriber("ReadNotifications", "guest", "guest");
+			new DomainSubscriber("DomainNotifications", "guest", "guest");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
